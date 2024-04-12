@@ -49,10 +49,7 @@ public class AuthController {
     }
 
 
-    @PostMapping("/createUser")
-    public ResponseEntity<User> crateUser(@RequestBody User user){
-        return ResponseEntity.ok(this.userServices.createUsers(user));
-    }
+
 
     private void doAuthenticate(String email, String password) {
 

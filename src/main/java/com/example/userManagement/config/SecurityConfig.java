@@ -33,17 +33,29 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF protection
+                .cors(AbstractHttpConfigurer::disable) // Disable CORS configuration
 
-        http.csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)
+                // Configure authorization rules
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/home/**").authenticated().
-                                requestMatchers("/auth/login").permitAll().requestMatchers("/auth/createUser").permitAll().anyRequest().permitAll())
-                .exceptionHandling(ex->ex.authenticationEntryPoint(point))
-                .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                        auth
+                                .requestMatchers("/auth/login", "/user/create").permitAll() // Permit access without authentication
+                                .anyRequest().authenticated() // Require authentication for all other requests
+                )
 
+                // Configure handling of authentication exceptions
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
+
+                // Configure session management (stateless for REST APIs)
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                );
+
+        // Add custom filter before the standard UsernamePasswordAuthenticationFilter
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
-        return  http.build();
+
+        return http.build();
     }
 
     @Bean

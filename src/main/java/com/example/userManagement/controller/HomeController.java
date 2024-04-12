@@ -16,10 +16,6 @@ public class HomeController {
 
     @Autowired
     UserServicesImpl userServices;
-    @GetMapping("/user")
-    public List<User> getUser(){
-        return  this.userServices.getUsers();
-    }
 
 
     @GetMapping("/current-user")

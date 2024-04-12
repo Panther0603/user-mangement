@@ -1,15 +1,13 @@
 package com.example.userManagement.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.SplittableRandom;
 
 @Getter
@@ -28,6 +26,10 @@ public class User implements UserDetails {
     private String email;
     private String name;
     private String password;
+    private Date createdDate;
+
+    @Column(columnDefinition = "tinyint default true",nullable = false)
+    private Boolean active;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
