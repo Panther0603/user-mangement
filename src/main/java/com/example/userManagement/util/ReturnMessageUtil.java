@@ -20,4 +20,18 @@ public class ReturnMessageUtil {
         commonDTO.setHttpCode(200);
         return commonDTO;
     }
+
+    public <T> CommonDTO<T> deletedSuccessFully(String entityName, CommonDTO<T> commonDTO){
+        commonDTO.setMessage(entityName+" deleted successfully ");
+        commonDTO.setStatus(true);
+        commonDTO.setHttpCode(200);
+        return commonDTO;
+    }
+
+    public <T> CommonDTO<T> recordsFetchedSuccessFully(String entityName, CommonDTO<T> commonDTO){
+        commonDTO.setMessage(entityName+" records fetched  successfully");
+        commonDTO.setStatus(true);
+        commonDTO.setHttpCode(200);
+        return commonDTO;
+    }
 }

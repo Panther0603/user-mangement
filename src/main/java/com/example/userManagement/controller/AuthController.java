@@ -43,7 +43,7 @@ public class AuthController {
 
         AuthResponse response = AuthResponse.builder()
                 .token(token)
-                .userName(userDetails.getUsername()).build();
+                .userName(userDetails.getUsername()).isAuthorized(true).userUid(userDetails.getUsername()).build();
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

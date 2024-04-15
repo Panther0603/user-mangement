@@ -11,4 +11,6 @@ import lombok.*;
 public class AuthResponse {
     private String userName;
     private String token;
+    private Boolean isAuthorized;
+    private String userUid;
 }

@@ -16,14 +16,19 @@ import java.util.SplittableRandom;
 @AllArgsConstructor
 @ToString
 @Entity
+@Builder
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(unique = true)
     private String userUid;
+
+    @Column(unique = true)
     private String email;
+
     private String name;
     private String password;
     private Date createdDate;

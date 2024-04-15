@@ -3,6 +3,7 @@ package com.example.userManagement.config;
 
 import com.example.userManagement.security.JWTAuthenticationEntryPoint;
 import com.example.userManagement.security.JwtAuthenticationFilter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,7 +41,8 @@ public class SecurityConfig {
                 // Configure authorization rules
                 .authorizeHttpRequests(auth ->
                         auth
-                                .requestMatchers("/auth/login", "/user/create").permitAll() // Permit access without authentication
+                                .requestMatchers("/auth/login", "/user/create","/swagger-ui.html", "/webjars/**").permitAll()
+                                .requestMatchers(AUTH_WHITELIST).permitAll()// Permit access without authentication
                                 .anyRequest().authenticated() // Require authentication for all other requests
                 )
 
@@ -70,4 +72,13 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration builder) throws Exception {
         return builder.getAuthenticationManager();
     }
+
+    public  static  final  String[] AUTH_WHITELIST={
+        "/api/v1/auth/**",
+            "/v3/api-docs/**",
+            "/v3/api-docs.yaml",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+
+    };
 }
